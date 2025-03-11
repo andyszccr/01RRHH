@@ -13,7 +13,14 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Nombre Usuario</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Cédula</th>
+            <th>Rol</th>
+            <th>Departamento</th>
+            <th>Salario Base</th>
+            <th>Nombre de Usuario</th>
+            <th>Estado del Usuario</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -21,7 +28,16 @@
         @foreach (var usuario in Model)
         {
             <tr>
+                <td>@usuario.Nombre</td>
+                <td>@usuario.Apellidos</td>
+                <td>@usuario.Cedula</td>
+                <td style="background-color: lightgreen; color: black;">@usuario.Rol?.NombreRol</td> <!-- Color de fondo verde -->
+                <td style="background-color: lightyellow;">@usuario.Departamento?.Departamento1</td> <!-- Color de fondo amarillo -->
+                <td>@usuario.SalarioBase</td>
                 <td>@usuario.NombreUsuario</td>
+                <td style="background-color: @(usuario.UsuarioStatus ? "lightblue" : "lightgray"); color: black;">
+                    @(usuario.UsuarioStatus ? "Activo" : "Inactivo")
+                </td> <!-- Color de fondo celeste claro o gris claro -->
                 <td>
                     <a asp-action="Edit" asp-route-id="@usuario.UsuarioId" class="btn btn-warning">Editar</a>
                     <a asp-action="Delete" asp-route-id="@usuario.UsuarioId" class="btn btn-danger">Eliminar</a>

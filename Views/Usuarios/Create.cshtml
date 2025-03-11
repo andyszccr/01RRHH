@@ -8,15 +8,138 @@
 
 <form asp-action="Create" method="post">
     <div class="mb-3">
-        <label asp-for="NombreUsuario" class="form-label"></label>
-        <input asp-for="NombreUsuario" class="form-control" />
+        <label asp-for="NombreUsuario" class="form-label">Nombre de Usuario</label>
+        <input asp-for="NombreUsuario" class="form-control" placeholder="Nombre de Usuario" />
         <span asp-validation-for="NombreUsuario" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Contrasena" class="form-label"></label>
-        <input asp-for="Contrasena" type="password" class="form-control" />
+        <label asp-for="Contrasena" class="form-label">Contraseña</label>
+        <input asp-for="Contrasena" type="password" class="form-control" placeholder="Contraseña" />
         <span asp-validation-for="Contrasena" class="text-danger"></span>
     </div>
-    <!-- Agrega más campos según sea necesario -->
+    <div class="mb-3">
+        <label asp-for="Cedula" class="form-label">Cédula</label>
+        <input asp-for="Cedula" class="form-control" placeholder="Cédula Ejemplo: 101110111" />
+        <span asp-validation-for="Cedula" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Nombre" class="form-label">Nombre</label>
+        <input asp-for="Nombre" class="form-control" placeholder="Nombre" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Apellidos" class="form-label">Apellidos</label>
+        <input asp-for="Apellidos" class="form-control" placeholder="Apellidos" />
+        <span asp-validation-for="Apellidos" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="FechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+        <input asp-for="FechaNacimiento" class="form-control" type="date" />
+        <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="RolId" class="form-label">Rol</label>
+        <select asp-for="RolId" class="form-select">
+            <option value="">Seleccione Rol</option>
+            @foreach (var rol in ViewBag.RolList)
+            {
+                <option value="@rol.RolId">@rol.NombreRol</option>
+            }
+        </select>
+        <span asp-validation-for="RolId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DepartamentoId" class="form-label">Departamento</label>
+        <select asp-for="DepartamentoId" class="form-select">
+            <option value="">Seleccione Departamento</option>
+            @foreach (var departamento in ViewBag.DepartamentoList)
+            {
+                <option value="@departamento.DepartamentoId">@departamento.Departamento1</option>
+            }
+        </select>
+        <span asp-validation-for="DepartamentoId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="SalarioBase" class="form-label">Salario Base</label>
+        <input asp-for="SalarioBase" class="form-control" placeholder="00.00" />
+        <span asp-validation-for="SalarioBase" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ProvinciaId" class="form-label">Provincia</label>
+        <select asp-for="ProvinciaId" class="form-select" id="provinciaSelect">
+            <option value="">Seleccione Provincia</option>
+            @foreach (var provincia in ViewBag.ProvinciaList)
+            {
+                <option value="@provincia.ProvinciaId">@provincia.Provincia</option>
+            }
+        </select>
+        <span asp-validation-for="DepartamentoId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CantonId" class="form-label">Cantón</label>
+        <select asp-for="CantonId" class="form-select" id="cantonSelect" disabled>
+            <option value="">Seleccione Canton</option>
+            @foreach (var canton in ViewBag.CantonList)
+            {
+                <option value="@canton.CantonId">@canton.Canton1</option>
+            }
+        </select>
+        <span asp-validation-for="CantonId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DistritoId" class="form-label">Distrito</label>
+        <select asp-for="DistritoId" class="form-select" id="distritoSelect" disabled>
+            <option value="">Seleccione Distrito</option>
+            @foreach (var distrito in ViewBag.DistritoList)
+            {
+                <option value="@distrito.DistritoId">@distrito.Distrito1</option>
+            }
+        </select>
+        <span asp-validation-for="DistritoId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DireccionExacta" class="form-label">Dirección Exacta</label>
+        <input asp-for="DireccionExacta" class="form-control" placeholder="Dirección Exacta" />
+        <span asp-validation-for="DireccionExacta" class="text-danger"></span>
+    </div>
     <button type="submit" class="btn btn-primary">Crear</button>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a> <!-- Botón de Volver -->
 </form>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#provinciaSelect').change(function () {
+                var provinciaId = $(this).val();
+                $('#cantonSelect').empty().append('<option value="">Seleccione Canton</option>').prop('disabled', true);
+                $('#distritoSelect').empty().append('<option value="">Seleccione Distrito</option>').prop('disabled', true);
+
+                if (provinciaId) {
+                    $.getJSON('/Usuarios/GetCantones', { provinciaId: provinciaId }, function (data) {
+                        $('#cantonSelect').empty().append('<option value="">Seleccione Canton</option>');
+                        $.each(data, function (index, canton) {
+                            $('#cantonSelect').append('<option value="' + canton.cantonId + '">' + canton.canton1 + '</option>');
+                        });
+                        $('#cantonSelect').prop('disabled', false);
+                    });
+                }
+            });
+
+            $('#cantonSelect').change(function () {
+                var cantonId = $(this).val();
+                $('#distritoSelect').empty().append('<option value="">Seleccione Distrito</option>').prop('disabled', true);
+
+                if (cantonId) {
+                    $.getJSON('/Usuarios/GetDistritos', { cantonId: cantonId }, function (data) {
+                        $('#distritoSelect').empty().append('<option value="">Seleccione Distrito</option>');
+                        $.each(data, function (index, distrito) {
+                            $('#distritoSelect').append('<option value="' + distrito.distritoId + '">' + distrito.distrito1 + '</option>');
+                        });
+                        $('#distritoSelect').prop('disabled', false);
+                    });
+                }
+            });
+        });
+    </script>
+}

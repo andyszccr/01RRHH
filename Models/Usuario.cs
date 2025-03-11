@@ -9,7 +9,6 @@ public partial class Usuario
     public int UsuarioId { get; set; }
 
     [Required(ErrorMessage = "La cédula es obligatoria.")]
-    [Range(1, 99999999, ErrorMessage = "La cédula debe ser un número válido.")]
     public int Cedula { get; set; }
 
     [StringLength(100, ErrorMessage = "El nombre no puede exceder los 100 caracteres.")]
@@ -34,12 +33,11 @@ public partial class Usuario
     [StringLength(50, ErrorMessage = "El nombre de usuario no puede exceder los 50 caracteres.")]
     public string NombreUsuario { get; set; } = null!;
 
-    [Required(ErrorMessage = "La contraseña es obligatoria.")]
     [DataType(DataType.Password)]
     [StringLength(100, MinimumLength = 6, ErrorMessage = "La contraseña debe tener al menos 6 caracteres.")]
-    public string Contrasena { get; set; } = null!;
+    public string? Contrasena { get; set; } = null!;
 
-    public string Token { get; set; } = null!;
+    public string Token { get; set; } = "valor_predeterminado";
 
     [StringLength(250, ErrorMessage = "La dirección exacta no puede exceder los 250 caracteres.")]
     public string? DireccionExacta { get; set; }
@@ -59,11 +57,11 @@ public partial class Usuario
     [DataType(DataType.DateTime)]
     public DateTime? UsuarioDelete { get; set; }
 
-    public bool? UsuarioStatus { get; set; }
+    public bool UsuarioStatus { get; set; }
 
     public virtual Canton? Canton { get; set; }
 
-    public virtual Departamento Departamento { get; set; } = null!;
+    public virtual Departamento? Departamento { get; set; } = null!;
 
     public virtual Distrito? Distrito { get; set; }
 
@@ -83,7 +81,7 @@ public partial class Usuario
 
     public virtual Provincium? Provincia { get; set; }
 
-    public virtual Role Rol { get; set; } = null!;
+    public virtual Role? Rol { get; set; } = null!;
 
     public virtual ICollection<Vacacione> Vacaciones { get; set; } = new List<Vacacione>();
 }
