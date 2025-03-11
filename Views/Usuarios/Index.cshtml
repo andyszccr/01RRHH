@@ -1,0 +1,32 @@
+﻿@model IEnumerable<RRHH.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Lista de Usuarios";
+}
+
+<h1>Usuarios</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Agregar Usuario</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre Usuario</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr>
+                <td>@usuario.NombreUsuario</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@usuario.UsuarioId" class="btn btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@usuario.UsuarioId" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

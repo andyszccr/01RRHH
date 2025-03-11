@@ -1,0 +1,22 @@
+﻿@model RRHH.Models.Usuario
+
+@{
+    ViewData["Title"] = "Crear Usuario";
+}
+
+<h1>Crear Usuario</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="NombreUsuario" class="form-label"></label>
+        <input asp-for="NombreUsuario" class="form-control" />
+        <span asp-validation-for="NombreUsuario" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Contrasena" class="form-label"></label>
+        <input asp-for="Contrasena" type="password" class="form-control" />
+        <span asp-validation-for="Contrasena" class="text-danger"></span>
+    </div>
+    <!-- Agrega más campos según sea necesario -->
+    <button type="submit" class="btn btn-primary">Crear</button>
+</form>

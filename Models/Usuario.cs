@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace RRHH.Models;
 
@@ -7,26 +8,40 @@ public partial class Usuario
 {
     public int UsuarioId { get; set; }
 
+    [Required(ErrorMessage = "La cédula es obligatoria.")]
+    [Range(1, 99999999, ErrorMessage = "La cédula debe ser un número válido.")]
     public int Cedula { get; set; }
 
+    [StringLength(100, ErrorMessage = "El nombre no puede exceder los 100 caracteres.")]
     public string? Nombre { get; set; }
 
+    [StringLength(100, ErrorMessage = "Los apellidos no pueden exceder los 100 caracteres.")]
     public string? Apellidos { get; set; }
 
+    [Required(ErrorMessage = "El rol es obligatorio.")]
     public int RolId { get; set; }
 
+    [Required(ErrorMessage = "El departamento es obligatorio.")]
     public int DepartamentoId { get; set; }
 
+    [DataType(DataType.Date, ErrorMessage = "La fecha de nacimiento debe ser una fecha válida.")]
     public DateTime? FechaNacimiento { get; set; }
 
+    [Range(0, double.MaxValue, ErrorMessage = "El salario base debe ser un número positivo.")]
     public double? SalarioBase { get; set; }
 
+    [Required(ErrorMessage = "El nombre de usuario es obligatorio.")]
+    [StringLength(50, ErrorMessage = "El nombre de usuario no puede exceder los 50 caracteres.")]
     public string NombreUsuario { get; set; } = null!;
 
+    [Required(ErrorMessage = "La contraseña es obligatoria.")]
+    [DataType(DataType.Password)]
+    [StringLength(100, MinimumLength = 6, ErrorMessage = "La contraseña debe tener al menos 6 caracteres.")]
     public string Contrasena { get; set; } = null!;
 
     public string Token { get; set; } = null!;
 
+    [StringLength(250, ErrorMessage = "La dirección exacta no puede exceder los 250 caracteres.")]
     public string? DireccionExacta { get; set; }
 
     public int? ProvinciaId { get; set; }
@@ -35,10 +50,13 @@ public partial class Usuario
 
     public int? DistritoId { get; set; }
 
+    [DataType(DataType.DateTime)]
     public DateTime? UsuarioCreacion { get; set; }
 
+    [DataType(DataType.DateTime)]
     public DateTime? UsuarioUpdate { get; set; }
 
+    [DataType(DataType.DateTime)]
     public DateTime? UsuarioDelete { get; set; }
 
     public bool? UsuarioStatus { get; set; }
