@@ -127,7 +127,8 @@ namespace RRHH.Controllers
             if (usuario != null)
             {
                 usuario.UsuarioDelete = DateTime.Now;
-                _context.Usuarios.Remove(usuario);
+                usuario.UsuarioStatus = false;
+                _context.Usuarios.Update(usuario);
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));

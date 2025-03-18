@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RRHH.Models;
 
@@ -49,14 +47,16 @@ namespace RRHH.Controllers
         }
 
         // POST: Departamentoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DepartamentoId,Departamento1,DepartamentoCreate,DepartamentoUpdate,DepartamentoDelete,DepartamentoStatus")] Departamento departamento)
+        public async Task<IActionResult> Create([Bind("DepartamentoId,Departamento1,DepartamentoStatus")] Departamento departamento)
         {
             if (ModelState.IsValid)
             {
+                departamento.DepartamentoCreate = DateTime.Now; // Asignar fecha de creación
+                //departamento.DepartamentoUpdate = DateTime.Now; // Asignar fecha de actualización
+                departamento.DepartamentoDelete = null; // No hay fecha de eliminación al crear
+                departamento.DepartamentoStatus = true; // Activo
                 _context.Add(departamento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -81,11 +81,9 @@ namespace RRHH.Controllers
         }
 
         // POST: Departamentoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DepartamentoId,Departamento1,DepartamentoCreate,DepartamentoUpdate,DepartamentoDelete,DepartamentoStatus")] Departamento departamento)
+        public async Task<IActionResult> Edit(int id, [Bind("DepartamentoId,Departamento1,DepartamentoStatus")] Departamento departamento)
         {
             if (id != departamento.DepartamentoId)
             {
@@ -96,7 +94,22 @@ namespace RRHH.Controllers
             {
                 try
                 {
-                    _context.Update(departamento);
+                    var existingDepartamento = await _context.Departamentos.FindAsync(id);
+                    if (existingDepartamento == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // No modificar la fecha de creación
+                    departamento.DepartamentoCreate = existingDepartamento.DepartamentoCreate;
+
+                    // Asignar la fecha actual al actualizar
+                    departamento.DepartamentoUpdate = DateTime.Now;
+
+                    // Actualizar el estado
+                    departamento.DepartamentoStatus = departamento.DepartamentoStatus;
+
+                    _context.Entry(existingDepartamento).CurrentValues.SetValues(departamento);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -105,10 +118,7 @@ namespace RRHH.Controllers
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+                    throw; // Re-lanzar la excepción si ocurre un error
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -141,16 +151,15 @@ namespace RRHH.Controllers
             var departamento = await _context.Departamentos.FindAsync(id);
             if (departamento != null)
             {
-                _context.Departamentos.Remove(departamento);
+                departamento.DepartamentoDelete = DateTime.Now; // Asignar fecha de eliminación
+                departamento.DepartamentoStatus = false; // Cambiar estado a inactivo
+                _context.Departamentos.Update(departamento);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DepartamentoExists(int id)
-        {
-            return _context.Departamentos.Any(e => e.DepartamentoId == id);
-        }
+        private bool DepartamentoExists(int id) => _context.Departamentos.Any(e => e.DepartamentoId == id);
     }
 }

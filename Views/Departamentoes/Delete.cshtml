@@ -1,51 +1,49 @@
 ﻿@model RRHH.Models.Departamento
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar Departamento";
 }
 
-<h1>Delete</h1>
+<div class="container mt-4">
+    <h1>Eliminar Departamento</h1>
+    <h4>Está a punto de eliminar el siguiente departamento:</h4>
+    <div>
+        <br />
+        <div>
+            <dl class="row">
+                <dt class="col-sm-3">Nombre del Departamento</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Departamento1)
+                </dd>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Departamento</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Departamento1)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Departamento1)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartamentoCreate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DepartamentoCreate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartamentoUpdate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DepartamentoUpdate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartamentoDelete)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DepartamentoDelete)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartamentoStatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DepartamentoStatus)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="DepartamentoId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+                <dt class="col-sm-3">Fecha de Creación</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.DepartamentoCreate)
+                </dd>
+
+                <dt class="col-sm-3">Fecha de Actualización</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.DepartamentoUpdate)
+                </dd>
+
+             <!--    <dt class="col-sm-3">Fecha de Eliminación</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.DepartamentoDelete)
+                   </dd>-->
+
+                <dt class="col-sm-3">Estado del Departamento</dt>
+                <dd class="col-sm-9">
+                    @(Model.DepartamentoStatus ? "Activo" : "Inactivo")
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <p>¿Está seguro de que desea eliminar este departamento?</p>
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="DepartamentoId" />
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a> <!-- Botón de Cancelar -->
+            </form>
+        </div>
+    </div>
 </div>
