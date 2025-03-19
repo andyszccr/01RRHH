@@ -1,0 +1,59 @@
+﻿@model IEnumerable<RRHH.Models.Liquidacione>
+
+@{
+    ViewData["Title"] = "Lista Liquidaciones";
+}
+
+<h1>Liquidaciones</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Agregar Nuevo</a>
+</p>
+
+
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Tipo Liquidación</th>
+            <th>Fecha Liquidación</th>
+            <th>Salario Base</th>
+            <th>Vacaciones No Disfrutadas</th>
+            <th>Aguinaldo Proporcional</th>
+            <th>Preaviso</th>
+            <th>Indemnización</th>
+            <th>Total Liquidación</th>
+            <th>Estado</th>
+            <th>Fecha de Pago</th>
+            <th>Banco</th>
+            <th>Número de Cuenta</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var liquidacione in Model)
+        {
+            <tr>
+                <td>@liquidacione.Usuario?.NombreUsuario</td>
+                <td>@liquidacione.TipoLiquidacion?.NombreTipo</td>
+                <td>@liquidacione.FechaLiquidacion</td>
+                <td>@liquidacione.SalarioBase</td>
+                <td>@liquidacione.VacacionesNoDisfrutadas</td>
+                <td>@liquidacione.AguinaldoProporcional</td>
+                <td>@liquidacione.Preaviso</td>
+                <td>@liquidacione.Indemnizacion</td>
+                <td>@liquidacione.TotalLiquidacion</td>
+                <td>@liquidacione.Estado</td>
+                <td>@liquidacione.FechaPago</td>
+                <td>@liquidacione.Banco</td>
+                <td>@liquidacione.NumeroCuenta</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@liquidacione.LiquidacionId" class="btn btn-warning">Editar</a>
+                    <a asp-action="Details" asp-route-id="@liquidacione.LiquidacionId" class="btn btn-info">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@liquidacione.LiquidacionId" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

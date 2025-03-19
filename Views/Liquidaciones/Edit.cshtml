@@ -1,0 +1,90 @@
+﻿@model RRHH.Models.Liquidacione
+
+@{
+    ViewData["Title"] = "Editar Liquidación";
+}
+
+<h1>Editar Liquidación</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="LiquidacionId" />
+            <div class="mb-3">
+                <label asp-for="UsuarioId" class="form-label">Usuario</label>
+                <select asp-for="UsuarioId" class="form-select" asp-items="@(new SelectList(ViewBag.UsuarioList, "UsuarioId", "Nombre"))">
+                    <option value="">Seleccione El Usuario</option>
+                </select>
+                <span asp-validation-for="UsuarioId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TipoLiquidacionId" class="form-label">Tipo de Liquidación</label>
+                <select asp-for="TipoLiquidacionId" class="form-select" asp-items="@(new SelectList(ViewBag.TipoLiquidacionList, "TipoLiquidacionId", "NombreTipo"))">
+                    <option value="">Seleccione el Tipo de Liquidación</option>
+                </select>
+                <span asp-validation-for="TipoLiquidacionId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="FechaLiquidacion" class="form-label">Fecha de Liquidación</label>
+                <input asp-for="FechaLiquidacion" class="form-control" type="date" value="@Model.FechaLiquidacion.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="FechaLiquidacion" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="SalarioBase" class="form-label">Salario Base</label>
+                <input asp-for="SalarioBase" class="form-control" type="number" step="0.01" value="@Model.SalarioBase.ToString("0.00").Replace(',', '.')" />
+                <span asp-validation-for="SalarioBase" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="VacacionesNoDisfrutadas" class="form-label">Vacaciones No Disfrutadas</label>
+                <input asp-for="VacacionesNoDisfrutadas" class="form-control" type="number" step="0.01" value="@Model.VacacionesNoDisfrutadas?.ToString("0.00").Replace(',', '.')" />
+                <span asp-validation-for="VacacionesNoDisfrutadas" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="AguinaldoProporcional" class="form-label">Aguinaldo Proporcional</label>
+                <input asp-for="AguinaldoProporcional" class="form-control" type="number" step="0.01" value="@Model.AguinaldoProporcional?.ToString("0.00").Replace(',', '.')" />
+                <span asp-validation-for="AguinaldoProporcional" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Preaviso" class="form-label">Preaviso</label>
+                <input asp-for="Preaviso" class="form-control" type="number" step="0.01" value="@Model.Preaviso?.ToString("0.00").Replace(',', '.')" />
+                <span asp-validation-for="Preaviso" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Indemnizacion" class="form-label">Indemnización</label>
+                <input asp-for="Indemnizacion" class="form-control" type="number" step="0.01" value="@Model.Indemnizacion?.ToString("0.00").Replace(',', '.')" />
+                <span asp-validation-for="Indemnizacion" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TotalLiquidacion" class="form-label">Total Liquidación</label>
+                <input asp-for="TotalLiquidacion" class="form-control" type="number" step="0.01" value="@Model.TotalLiquidacion.ToString("0.00").Replace(',', '.')" />
+                <span asp-validation-for="TotalLiquidacion" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Estado" class="form-label">Estado</label>
+                <input asp-for="Estado" class="form-control" value="@Model.Estado" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="FechaPago" class="form-label">Fecha de Pago</label>
+                <input asp-for="FechaPago" class="form-control" type="date" value="@Model.FechaPago?.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="FechaPago" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Banco" class="form-label">Banco</label>
+                <input asp-for="Banco" class="form-control" value="@Model.Banco" />
+                <span asp-validation-for="Banco" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="NumeroCuenta" class="form-label">Número de Cuenta</label>
+                <input asp-for="NumeroCuenta" class="form-control" value="@Model.NumeroCuenta" />
+                <span asp-validation-for="NumeroCuenta" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <a asp-action="Index" class="btn btn-secondary">Volver</a> <!-- Botón de Volver -->
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

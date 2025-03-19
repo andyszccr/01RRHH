@@ -1,0 +1,77 @@
+﻿@model RRHH.Models.Liquidacione
+
+@{
+    ViewData["Title"] = "Eliminar Liquidación";
+}
+
+<div class="container mt-4">
+    <h1>Eliminar Liquidación</h1>
+    <h4>Está a punto de eliminar la siguiente liquidación:</h4>
+    <div>
+        <br />
+        <div>
+            <dl class="row">
+                <dt class="col-sm-3">Fecha de Liquidación</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.FechaLiquidacion)
+                </dd>
+                <dt class="col-sm-3">Salario Base</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.SalarioBase)
+                </dd>
+                <dt class="col-sm-3">Vacaciones No Disfrutadas</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.VacacionesNoDisfrutadas)
+                </dd>
+                <dt class="col-sm-3">Aguinaldo Proporcional</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.AguinaldoProporcional)
+                </dd>
+                <dt class="col-sm-3">Preaviso</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Preaviso)
+                </dd>
+                <dt class="col-sm-3">Indemnización</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Indemnizacion)
+                </dd>
+                <dt class="col-sm-3">Total Liquidación</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.TotalLiquidacion)
+                </dd>
+                <dt class="col-sm-3">Estado</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Estado)
+                </dd>
+                <dt class="col-sm-3">Fecha de Pago</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.FechaPago)
+                </dd>
+                <dt class="col-sm-3">Banco</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Banco)
+                </dd>
+                <dt class="col-sm-3">Número de Cuenta</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.NumeroCuenta)
+                </dd>
+                <dt class="col-sm-3">Tipo de Liquidación</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.TipoLiquidacion.TipoLiquidacionId)
+                </dd>
+                <dt class="col-sm-3">Usuario</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Usuario.NombreUsuario)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <p>¿Está seguro de que desea eliminar esta liquidación?</p>
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="LiquidacionId" />
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a> <!-- Botón de Cancelar -->
+            </form>
+        </div>
+    </div>
+</div>
