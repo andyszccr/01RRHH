@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using System.ComponentModel.DataAnnotations;
+
 namespace RRHH.Models;
 
 public partial class Liquidacione
 {
     public int LiquidacionId { get; set; }
 
-    public int UsuarioId { get; set; }
+    public int? UsuarioId { get; set; }
 
-    public int TipoLiquidacionId { get; set; }
+    public int? TipoLiquidacionId { get; set; }
 
     public DateOnly FechaLiquidacion { get; set; }
 
