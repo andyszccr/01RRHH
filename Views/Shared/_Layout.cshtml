@@ -35,7 +35,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" as p-controller="Vacaciones" asp-action="Index">Vacaciones</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Vacaciones" asp-action="Index">Vacaciones</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Liquidaciones" asp-action="Index">Liquidaciones</a>
@@ -48,6 +48,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Planillas" asp-action="Index">Planillas</a>
+                        </li>
+                    </ul>
+                    <!-- Opción de Cerrar Sesión alineada a la derecha -->
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="CuentaUsuario" asp-action="CerrarSesion">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>

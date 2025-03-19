@@ -49,8 +49,8 @@ namespace RRHH.Controllers
         // GET: Planillas/Create
         public IActionResult Create()
         {
-            ViewData["ImpuestoRentaId"] = new SelectList(_context.ImpuestoRenta, "ImpuestoRentaId", "ImpuestoRentaId");
-            ViewData["TipoDeduccionId"] = new SelectList(_context.TipoDeducciones, "TipoDeduccionId", "TipoDeduccionId");
+            ViewData["ImpuestoRentaId"] = new SelectList(_context.ImpuestoRenta, "Porcentaje", "Porcentaje");
+            ViewData["TipoDeduccionId"] = new SelectList(_context.TipoDeducciones, "DeduccionNombre", "DeduccionNombre");
             ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario");
             return View();
         }

@@ -14,6 +14,13 @@ namespace RRHH.Controllers
             _context = context;
         }
 
+        // Acción para cerrar sesión
+        public IActionResult CerrarSesion()
+        {
+            return RedirectToAction("Login"); 
+        }
+
+
         // GET: Login
         public IActionResult Login()
         {
@@ -83,6 +90,7 @@ namespace RRHH.Controllers
         // Cargar listas para los ViewBags
         private async Task LoadViewBags()
         {
+           
             ViewBag.RolList = await _context.Roles.ToListAsync();
             ViewBag.DepartamentoList = await _context.Departamentos.ToListAsync();
             ViewBag.ProvinciaList = await _context.Provincia.ToListAsync();

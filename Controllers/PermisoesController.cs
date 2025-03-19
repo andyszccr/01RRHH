@@ -62,12 +62,12 @@ namespace RRHH.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PermisoId,UsuarioId,TipoPermisoId,PermisoStatus,HorasSolicitadas,PermisoCreacion,PermisoUpdate,PermisoDelete,UsuarioIdaprobadoPor,Motivo")] Permiso permiso)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 _context.Add(permiso);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            
             ViewData["TipoPermisoId"] = new SelectList(_context.TipoPermisos, "TipoPermisoId", "TipoPermisoId", permiso.TipoPermisoId);
             ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioId);
             ViewData["UsuarioIdaprobadoPor"] = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioIdaprobadoPor);

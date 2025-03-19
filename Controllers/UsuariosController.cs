@@ -136,7 +136,7 @@ namespace RRHH.Controllers
 
         private bool UsuarioExists(int id) => _context.Usuarios.Any(e => e.UsuarioId == id);
 
-        // Cargar listas para los ViewBags
+        //// Cargar listas para los ViewBags
         private async Task LoadViewBags()
         {
             ViewBag.RolList = await _context.Roles.ToListAsync();
