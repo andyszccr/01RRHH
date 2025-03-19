@@ -1,0 +1,94 @@
+﻿@model RRHH.Models.Planilla
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Planilla</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PlanillaId" />
+            <div class="form-group">
+                <label asp-for="FechaPlanilla" class="control-label"></label>
+                <input asp-for="FechaPlanilla" class="form-control" />
+                <span asp-validation-for="FechaPlanilla" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsuarioId" class="control-label"></label>
+                <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
+                <span asp-validation-for="UsuarioId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorasTrabajadas" class="control-label"></label>
+                <input asp-for="HorasTrabajadas" class="form-control" />
+                <span asp-validation-for="HorasTrabajadas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorasExtras" class="control-label"></label>
+                <input asp-for="HorasExtras" class="form-control" />
+                <span asp-validation-for="HorasExtras" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoDeduccionId" class="control-label"></label>
+                <select asp-for="TipoDeduccionId" class="form-control" asp-items="ViewBag.TipoDeduccionId"></select>
+                <span asp-validation-for="TipoDeduccionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Deducciones" class="control-label"></label>
+                <input asp-for="Deducciones" class="form-control" />
+                <span asp-validation-for="Deducciones" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImpuestoRentaId" class="control-label"></label>
+                <select asp-for="ImpuestoRentaId" class="form-control" asp-items="ViewBag.ImpuestoRentaId"></select>
+                <span asp-validation-for="ImpuestoRentaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImpuestoRenta" class="control-label"></label>
+                <input asp-for="ImpuestoRenta" class="form-control" />
+                <span asp-validation-for="ImpuestoRenta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SalarioNeto" class="control-label"></label>
+                <input asp-for="SalarioNeto" class="form-control" />
+                <span asp-validation-for="SalarioNeto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlanillaFechaPago" class="control-label"></label>
+                <input asp-for="PlanillaFechaPago" class="form-control" />
+                <span asp-validation-for="PlanillaFechaPago" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlanillaStatus" class="control-label"></label>
+                <input asp-for="PlanillaStatus" class="form-control" />
+                <span asp-validation-for="PlanillaStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Banco" class="control-label"></label>
+                <input asp-for="Banco" class="form-control" />
+                <span asp-validation-for="Banco" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroCuenta" class="control-label"></label>
+                <input asp-for="NumeroCuenta" class="form-control" />
+                <span asp-validation-for="NumeroCuenta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
