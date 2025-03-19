@@ -1,0 +1,95 @@
+﻿@model IEnumerable<RRHH.Models.Vacacione>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaSolicitud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaFin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiasSolicitados)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiasAprobados)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comentarios)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaAprobacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCancelacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalarioVacaciones)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaSolicitud)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaFin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiasSolicitados)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiasAprobados)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comentarios)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAprobacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCancelacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalarioVacaciones)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario.NombreUsuario)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VacacionId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.VacacionId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.VacacionId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
