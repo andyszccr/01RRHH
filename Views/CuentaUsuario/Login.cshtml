@@ -151,6 +151,21 @@
             margin-top: 5px;
             display: block;
         }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
@@ -167,19 +182,15 @@
             <form method="post" class="login-form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="form-group">
-                    <div class="input-group">
-                        <i class="fas fa-user input-icon"></i>
-                        <input asp-for="NombreUsuario" class="form-control" placeholder="Usuario" />
-                    </div>
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input asp-for="NombreUsuario" class="form-control" placeholder="Usuario" />
                     <span asp-validation-for="NombreUsuario" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
-                    <div class="input-group">
-                        <i class="fas fa-lock input-icon"></i>
-                        <input asp-for="Contrasena" class="form-control" type="password" placeholder="Contraseña" />
-                    </div>
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input asp-for="Contrasena" class="form-control" type="password" placeholder="Contraseña" />
                     <span asp-validation-for="Contrasena" class="text-danger"></span>
                 </div>
 
