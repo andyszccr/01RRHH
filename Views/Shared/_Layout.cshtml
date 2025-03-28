@@ -1,79 +1,346 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - RRHH</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/RRHH.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"] - Gestión RRHH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+            --text-color: #333;
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f5f7fa;
+        }
+
+        /* Navbar */
+        .navbar-custom {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand-custom {
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .navbar-brand-custom img {
+            height: 30px;
+        }
+
+        .nav-link-custom {
+            color: var(--text-color);
+            border-radius: var(--border-radius);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link-custom:hover,
+        .nav-link-custom.active {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link-custom i {
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(220, 53, 69, 0.2);
+        }
+
+        /* Main Content */
+        .main-container {
+            flex: 1;
+            padding: 2rem 0;
+        }
+
+        /* Footer */
+        .footer-custom {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 1.5rem 0;
+            margin-top: auto;
+        }
+
+        .footer-link {
+            color: var(--light-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+
+        .social-icon {
+            color: white;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: var(--primary-color);
+        }
+
+        /* Estilos para la sección de Misión y Visión */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border: none;
+            border-radius: var(--border-radius);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+
+        .bg-opacity-10 {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .rounded-3 {
+            border-radius: 0.5rem !important;
+        }
+
+        /* Efectos para las imágenes de valores */
+        .img-fluid {
+            transition: transform 0.3s ease, filter 0.3s ease;
+            max-height: 100px;
+            filter: opacity(0.8);
+        }
+
+        .img-fluid:hover {
+            transform: scale(1.1);
+            filter: opacity(1) drop-shadow(0 0 4px rgba(52, 152, 219, 0.3));
+        }
+
+        /* Estilos para el logo */
+        .logo-container {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RRHH</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container">
+                <a class="navbar-brand navbar-brand-custom d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index">
+                    <div class="logo-container">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <span style="font-weight: 600; font-size: 1.2rem;">Portal RRHH</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                            <a class="nav-link-custom" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home"></i> <span class="ms-1">Inicio</span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
+                            <a class="nav-link-custom" asp-controller="Usuarios" asp-action="Index">
+                                <i class="fas fa-users"></i> <span class="ms-1">Usuarios</span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                            <a class="nav-link-custom" asp-controller="Departamentoes" asp-action="Index">
+                                <i class="fas fa-building"></i> <span class="ms-1">Departamentos</span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Departamentoes" asp-action="Index">Departamentos</a>
+                            <a class="nav-link-custom" asp-controller="Vacaciones" asp-action="Index">
+                                <i class="fas fa-umbrella-beach"></i> <span class="ms-1">Vacaciones</span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Vacaciones" asp-action="Index">Vacaciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Liquidaciones" asp-action="Index">Liquidaciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="TipoDeducciones" asp-action="Index">Deducciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Permisoes" asp-action="Index">Permisos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Planillas" asp-action="Index">Planillas</a>
+                            <a class="nav-link-custom" asp-controller="Planillas" asp-action="Index">
+                                <i class="fas fa-file-invoice-dollar"></i> <span class="ms-1">Planillas</span>
+                            </a>
                         </li>
                     </ul>
-                    <!-- Opción de Cerrar Sesión alineada a la derecha -->
-                    <ul class="navbar-nav ml-auto">
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link-custom dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-cog"></i> <span class="ms-1">Más</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2" asp-controller="Roles" asp-action="Index">
+                                        <i class="fas fa-user-tag"></i> Roles
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2" asp-controller="Liquidaciones" asp-action="Index">
+                                        <i class="fas fa-calculator"></i> Liquidaciones
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2" asp-controller="TipoDeducciones" asp-action="Index">
+                                        <i class="fas fa-minus-circle"></i> Deducciones
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2" asp-controller="Permisoes" asp-action="Index">
+                                        <i class="fas fa-user-clock"></i> Permisos
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2" asp-controller="Home" asp-action="Privacy">
+                                        <i class="fas fa-shield-alt"></i> Privacidad
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="CuentaUsuario" asp-action="CerrarSesion">Cerrar Sesión</a>
+                            <a class="nav-link-custom logout-btn" asp-controller="CuentaUsuario" asp-action="CerrarSesion">
+                                <i class="fas fa-sign-out-alt"></i> <span class="ms-1">Cerrar Sesión</span>
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <div class="main-container">
+        <div class="container">
+            <main role="main">
+                <!-- Sección de Misión y Visión -->
+                <section class="py-5">
+                    <div class="row align-items-center">
+                        <!-- Misión -->
+                        <div class="col-lg-6 mb-4 mb-lg-0">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-center mb-4">
+                                        <div class="bg-opacity-10 p-3 rounded-circle me-3">
+                                            <i class="fas fa-bullseye text-primary fs-3"></i>
+                                        </div>
+                                        <h2 class="h4 mb-0">Misión</h2>
+                                    </div>
+                                    <p class="mb-0">
+                                        Brindar soluciones integrales en gestión de recursos humanos que optimicen 
+                                        el talento humano, fomenten el desarrollo organizacional y promuevan un 
+                                        ambiente laboral positivo y productivo.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Visión -->
+                        <div class="col-lg-6">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-center mb-4">
+                                        <div class="bg-opacity-10 p-3 rounded-circle me-3">
+                                            <i class="fas fa-eye text-primary fs-3"></i>
+                                        </div>
+                                        <h2 class="h4 mb-0">Visión</h2>
+                                    </div>
+                                    <p class="mb-0">
+                                        Ser reconocidos como el sistema líder en gestión de RRHH, innovando 
+                                        constantemente para adaptarnos a las necesidades cambiantes del mercado 
+                                        laboral y las organizaciones modernas.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sección de Imágenes Minimalistas -->
+                <section class="py-5 bg-light rounded-3">
+                    <div class="container">
+                        <h2 class="text-center mb-5">Nuestros Valores</h2>
+                        <div class="row g-4">
+                            <!-- Valor 1 -->
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/3281/3281289.png" alt="Integridad" class="img-fluid mb-3">
+                                    <h4 class="h5">Integridad</h4>
+                                    <p class="text-muted">Actuamos con ética y transparencia en todas nuestras acciones.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Valor 2 -->
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/3281/3281306.png" alt="Innovación" class="img-fluid mb-3">
+                                    <h4 class="h5">Innovación</h4>
+                                    <p class="text-muted">Buscamos constantemente mejoras y soluciones creativas.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Valor 3 -->
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/3281/3281293.png" alt="Colaboración" class="img-fluid mb-3">
+                                    <h4 class="h5">Colaboración</h4>
+                                    <p class="text-muted">Trabajamos en equipo para alcanzar objetivos comunes.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer-custom">
         <div class="container">
-            &copy; 2025 - RRHH - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; 2025 - Sistema de Gestión RRHH
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-3 mb-2">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <a class="footer-link" asp-controller="Home" asp-action="Privacy">Política de Privacidad</a>
+                </div>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-     @await RenderSectionAsync("Scripts", required: false) 
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
