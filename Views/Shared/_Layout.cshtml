@@ -1,79 +1,149 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - RRHH</title>
+    <title>@ViewData["Title"] - Sistema RRHH</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/RRHH.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RRHH</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Departamentoes" asp-action="Index">Departamentos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Vacaciones" asp-action="Index">Vacaciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Liquidaciones" asp-action="Index">Liquidaciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="TipoDeducciones" asp-action="Index">Deducciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Permisoes" asp-action="Index">Permisos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Planillas" asp-action="Index">Planillas</a>
-                        </li>
-                    </ul>
-                    <!-- Opción de Cerrar Sesión alineada a la derecha -->
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="CuentaUsuario" asp-action="CerrarSesion">Cerrar Sesión</a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>RRHH</h3>
             </div>
+
+            <ul class="list-unstyled components">
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-home"></i> Inicio
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Usuarios" ? "active" : "")">
+                    <a asp-controller="Usuarios" asp-action="Index">
+                        <i class="fas fa-users"></i> Usuarios
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Roles" ? "active" : "")">
+                    <a asp-controller="Roles" asp-action="Index">
+                        <i class="fas fa-user-tag"></i> Roles
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Departamentos" ? "active" : "")">
+                    <a asp-controller="Departamentos" asp-action="Index">
+                        <i class="fas fa-building"></i> Departamentos
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Puestos" ? "active" : "")">
+                    <a asp-controller="Puestos" asp-action="Index">
+                        <i class="fas fa-briefcase"></i> Puestos
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Permisos" ? "active" : "")">
+                    <a asp-controller="Permisos" asp-action="Index">
+                        <i class="fas fa-calendar-check"></i> Permisos
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Vacaciones" ? "active" : "")">
+                    <a asp-controller="Vacaciones" asp-action="Index">
+                        <i class="fas fa-umbrella-beach"></i> Vacaciones
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "HorasExtras" ? "active" : "")">
+                    <a asp-controller="HorasExtras" asp-action="Index">
+                        <i class="fas fa-clock"></i> Horas Extras
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Liquidaciones" ? "active" : "")">
+                    <a asp-controller="Liquidaciones" asp-action="Index">
+                        <i class="fas fa-file-invoice-dollar"></i> Liquidaciones
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Planillas" ? "active" : "")">
+                    <a asp-controller="Planillas" asp-action="Index">
+                        <i class="fas fa-file-alt"></i> Planillas
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "TipoDeducciones" ? "active" : "")">
+                    <a asp-controller="TipoDeducciones" asp-action="Index">
+                        <i class="fas fa-minus-circle"></i> Deducciones
+                    </a>
+                </li>
+            </ul>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+        <!-- Page Content -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="ml-auto">
+                        <div class="dropdown">
+                            <button class="btn btn-link dropdown-toggle" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i> @(Context.Session.GetString("NombreUsuario") ?? "Usuario")
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" asp-controller="CuentaUsuario" asp-action="Perfil">
+                                    <i class="fas fa-user-cog"></i> Perfil
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-controller="CuentaUsuario" asp-action="CerrarSesion">
+                                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid main-content">
+                @RenderBody()
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>Sistema RRHH</h5>
+                            <p>Gestión integral de recursos humanos</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Enlaces Rápidos</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="#"><i class="fas fa-info-circle"></i> Acerca de</a></li>
+                                <li><a href="#"><i class="fas fa-question-circle"></i> Ayuda</a></li>
+                                <li><a href="#"><i class="fas fa-envelope"></i> Contacto</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Contacto</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-phone"></i> +123 456 789</li>
+                                <li><i class="fas fa-envelope"></i> info@rrhh.com</li>
+                                <li><i class="fas fa-map-marker-alt"></i> Ciudad, País</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr class="footer-divider">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p class="mb-0">&copy; @DateTime.Now.Year - Sistema RRHH. Todos los derechos reservados.</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - RRHH - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-     @await RenderSectionAsync("Scripts", required: false) 
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

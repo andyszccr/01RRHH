@@ -1,107 +1,110 @@
 ﻿@model IEnumerable<RRHH.Models.Planilla>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Planillas";
 }
 
-<h1>Index</h1>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Planillas</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nueva Planilla
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaPlanilla)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HorasTrabajadas)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HorasExtras)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Deducciones)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImpuestoRenta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SalarioNeto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PlanillaFechaPago)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PlanillaStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Banco)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumeroCuenta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImpuestoRentaNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoDeduccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Usuario)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaPlanilla)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HorasTrabajadas)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HorasExtras)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Deducciones)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImpuestoRenta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SalarioNeto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlanillaFechaPago)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlanillaStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Banco)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroCuenta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImpuestoRentaNavigation.ImpuestoRentaId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoDeduccion.TipoDeduccionId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Usuario.NombreUsuario)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PlanillaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PlanillaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PlanillaId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">
+                            Planilla #@item.PlanillaId
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <small class="text-muted">Fecha:</small>
+                                <p class="mb-0">@item.FechaPlanilla.ToString("dd/MM/yyyy")</p>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Estado:</small>
+                                <p class="mb-0">
+                                    @if (item.PlanillaStatus == 1)
+                                    {
+                                        <span class="badge bg-success">Activa</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Inactiva</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <small class="text-muted">Horas Trabajadas:</small>
+                                <p class="mb-0">@item.HorasTrabajadas</p>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Horas Extras:</small>
+                                <p class="mb-0">@item.HorasExtras</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <small class="text-muted">Deducciones:</small>
+                                <p class="mb-0">₡@(item.Deducciones?.ToString("N2") ?? "0.00")</p>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Impuesto Renta:</small>
+                                <p class="mb-0">₡@(item.ImpuestoRenta?.ToString("N2") ?? "0.00")</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <small class="text-muted">Salario Neto:</small>
+                                <p class="mb-0 fw-bold">₡@(item.SalarioNeto?.ToString("N2") ?? "0.00")</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <small class="text-muted">Banco:</small>
+                                <p class="mb-0">@item.Banco</p>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Cuenta:</small>
+                                <p class="mb-0">@item.NumeroCuenta</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <small class="text-muted">Usuario:</small>
+                                <p class="mb-0">@item.Usuario.NombreUsuario</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="btn-group w-100">
+                            <a asp-action="Edit" asp-route-id="@item.PlanillaId" class="btn btn-outline-primary">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.PlanillaId" class="btn btn-outline-info">
+                                <i class="fas fa-info-circle"></i> Detalles
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.PlanillaId" class="btn btn-outline-danger">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

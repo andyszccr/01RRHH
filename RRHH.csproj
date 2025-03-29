@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Departamentoes\**" />
+    <Compile Remove="Views\Permisoes\**" />
+    <Content Remove="Views\Departamentoes\**" />
+    <Content Remove="Views\Permisoes\**" />
+    <EmbeddedResource Remove="Views\Departamentoes\**" />
+    <EmbeddedResource Remove="Views\Permisoes\**" />
+    <None Remove="Views\Departamentoes\**" />
+    <None Remove="Views\Permisoes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.3.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />

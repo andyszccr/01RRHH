@@ -1,0 +1,28 @@
+﻿@model RRHH.Models.Departamento
+
+@{
+    ViewData["Title"] = "Detalles del Departamento";
+}
+
+<div class="container mt-4">
+    <h1>Detalles del Departamento</h1>
+    <div>
+        <br />
+        <div>
+            <dl class="row">
+                <dt class="col-sm-3">Nombre del Departamento</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Departamento1)
+                </dd>
+                <dt class="col-sm-3">Estado del Departamento</dt>
+                <dd class="col-sm-9">
+                    @(Model.DepartamentoStatus ? "Activo" : "Inactivo")
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.DepartamentoId" class="btn btn-primary">Actualizar</a>
+            <a asp-action="Index" class="btn btn-secondary">Volver</a>
+        </div>
+    </div>
+</div>

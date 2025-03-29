@@ -1,0 +1,49 @@
+﻿@model RRHH.Models.Departamento
+
+@{
+    ViewData["Title"] = "Eliminar Departamento";
+}
+
+<div class="container mt-4">
+    <h1>Eliminar Departamento</h1>
+    <h4>Está a punto de eliminar el siguiente departamento:</h4>
+    <div>
+        <br />
+        <div>
+            <dl class="row">
+                <dt class="col-sm-3">Nombre del Departamento</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Departamento1)
+                </dd>
+
+                <dt class="col-sm-3">Fecha de Creación</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.DepartamentoCreate)
+                </dd>
+
+                <dt class="col-sm-3">Fecha de Actualización</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.DepartamentoUpdate)
+                </dd>
+
+             <!--    <dt class="col-sm-3">Fecha de Eliminación</dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.DepartamentoDelete)
+                   </dd>-->
+
+                <dt class="col-sm-3">Estado del Departamento</dt>
+                <dd class="col-sm-9">
+                    @(Model.DepartamentoStatus ? "Activo" : "Inactivo")
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <p>¿Está seguro de que desea eliminar este departamento?</p>
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="DepartamentoId" />
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a> <!-- Botón de Cancelar -->
+            </form>
+        </div>
+    </div>
+</div>

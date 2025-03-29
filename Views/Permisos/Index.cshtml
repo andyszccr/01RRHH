@@ -1,0 +1,108 @@
+﻿@model IEnumerable<RRHH.Models.Permiso>
+
+@{
+    ViewData["Title"] = "Permisos";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Permisos</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nuevo Permiso
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">
+                            Permiso #@item.PermisoId
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <small class="text-muted">Estado:</small>
+                                <p class="mb-0">
+                                    @if (item.PermisoStatus == 1)
+                                    {
+                                        <span class="badge bg-success">Aprobado</span>
+                                    }
+                                    else if (item.PermisoStatus == 2)
+                                    {
+                                        <span class="badge bg-warning">Pendiente</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Rechazado</span>
+                                    }
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Horas Solicitadas:</small>
+                                <p class="mb-0">@item.HorasSolicitadas</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <small class="text-muted">Motivo:</small>
+                                <p class="mb-0">@item.Motivo</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <small class="text-muted">Tipo de Permiso:</small>
+                                <p class="mb-0">@item.TipoPermiso.TipoPermiso1</p>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Solicitante:</small>
+                                <p class="mb-0">@item.Usuario.NombreUsuario</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <small class="text-muted">Aprobado Por:</small>
+                                <p class="mb-0">
+                                    @if (item.UsuarioIdaprobadoPorNavigation != null)
+                                    {
+                                        @item.UsuarioIdaprobadoPorNavigation.NombreUsuario
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Pendiente de aprobación</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <small class="text-muted">Fecha de Creación:</small>
+                                <p class="mb-0">@item.PermisoCreacion?.ToString("dd/MM/yyyy HH:mm")</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="btn-group w-100">
+                            <a asp-action="Edit" asp-route-id="@item.PermisoId" class="btn btn-outline-primary">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.PermisoId" class="btn btn-outline-info">
+                                <i class="fas fa-info-circle"></i> Detalles
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.PermisoId" class="btn btn-outline-danger">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

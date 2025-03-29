@@ -17,13 +17,18 @@ namespace RRHH.Controllers
         // Acción para cerrar sesión
         public IActionResult CerrarSesion()
         {
-            return RedirectToAction("Login"); 
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
         }
-
 
         // GET: Login
         public IActionResult Login()
         {
+            // Si ya hay una sesión activa, redirigir al inicio
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UsuarioId")))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -37,7 +42,11 @@ namespace RRHH.Controllers
 
             if (usuario != null)
             {
-                // Aquí puedes iniciar sesión (ej., establecer cookie)
+                // Guardar información en la sesión
+                HttpContext.Session.SetString("UsuarioId", usuario.UsuarioId.ToString());
+                HttpContext.Session.SetString("NombreUsuario", usuario.NombreUsuario);
+                HttpContext.Session.SetString("RolId", usuario.RolId.ToString());
+                
                 return RedirectToAction("Index", "Home");
             }
             ModelState.AddModelError("", "Usuario o contraseña incorrectos.");
@@ -47,50 +56,68 @@ namespace RRHH.Controllers
         // GET: Register
         public async Task<IActionResult> Register()
         {
-            await LoadViewBags(); // Cargar listas para provincias, cantones y distritos
+            await LoadViewBags();
             return View();
         }
 
         // POST: Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(Usuario model)
+        public async Task<IActionResult> Register(Usuario usuario)
         {
             if (ModelState.IsValid)
             {
-                var nuevoUsuario = new Usuario
-                {
-                    NombreUsuario = model.NombreUsuario,
-                    Contrasena = model.Contrasena,
-                    Cedula = model.Cedula,
-                    Nombre = model.Nombre,
-                    Apellidos = model.Apellidos,
-                    FechaNacimiento = model.FechaNacimiento,
-                    RolId = model.RolId,
-                    DepartamentoId = model.DepartamentoId,
-                    SalarioBase = model.SalarioBase,
-                    ProvinciaId = model.ProvinciaId,
-                    CantonId = model.CantonId,
-                    DistritoId = model.DistritoId,
-                    DireccionExacta = model.DireccionExacta,
-                    UsuarioStatus = true,
-                    UsuarioCreacion = DateTime.Now
-                };
-
-                _context.Usuarios.Add(nuevoUsuario);
+                usuario.UsuarioCreacion = DateTime.Now;
+                usuario.UsuarioStatus = true;
+                _context.Add(usuario);
                 await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Login));
+            }
+            await LoadViewBags();
+            return View(usuario);
+        }
 
+        // GET: Perfil
+        public async Task<IActionResult> Perfil()
+        {
+            var usuarioId = HttpContext.Session.GetString("UsuarioId");
+            if (string.IsNullOrEmpty(usuarioId))
+            {
                 return RedirectToAction("Login");
             }
 
-            await LoadViewBags(); // Si hay errores, cargar las listas nuevamente
-            return View(model);
+            var usuario = await _context.Usuarios
+                .Include(u => u.Departamento)
+                .Include(u => u.Rol)
+                .FirstOrDefaultAsync(u => u.UsuarioId.ToString() == usuarioId);
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            await LoadViewBags();
+            return View(usuario);
         }
 
-        // Cargar listas para los ViewBags
+        // POST: Perfil
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Perfil(Usuario usuario)
+        {
+            if (ModelState.IsValid)
+            {
+                usuario.UsuarioUpdate = DateTime.Now;
+                _context.Update(usuario);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Perfil));
+            }
+            await LoadViewBags();
+            return View(usuario);
+        }
+
         private async Task LoadViewBags()
         {
-           
             ViewBag.RolList = await _context.Roles.ToListAsync();
             ViewBag.DepartamentoList = await _context.Departamentos.ToListAsync();
             ViewBag.ProvinciaList = await _context.Provincia.ToListAsync();

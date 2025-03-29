@@ -1,0 +1,43 @@
+﻿@model IEnumerable<RRHH.Models.Departamento>
+
+@{
+    ViewData["Title"] = "Lista de Departamentos";
+}
+
+<h1>Departamentos</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Agregar Departamento</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre del Departamento</th>
+            <th>Fecha de Creación</th>
+            <th>Fecha de Actualización</th>
+            <th>Fecha de Eliminación</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Departamento1</td>
+                <td>@item.DepartamentoCreate?.ToString("dd/MM/yyyy")</td>
+                <td>@item.DepartamentoUpdate?.ToString("dd/MM/yyyy")</td>
+                <td>@item.DepartamentoDelete?.ToString("dd/MM/yyyy")</td>
+                <td style="background-color: @(item.DepartamentoStatus ? "lightblue" : "lightgray"); color: black;">
+                    @(item.DepartamentoStatus ? "Activo" : "Inactivo")
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DepartamentoId" class="btn btn-warning">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.DepartamentoId" class="btn btn-info">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.DepartamentoId" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,47 @@
+﻿@model RRHH.Models.Departamento
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Nuevo</h1>
+
+<h4>Departamento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Departamento1" class="control-label">Nombre del Departamento</label>
+                <input asp-for="Departamento1" class="form-control" placeholder="Departamento" />
+                <span asp-validation-for="Departamento1" class="text-danger"></span>
+            </div>
+            <!-- <div class="mb-3">
+                <label asp-for="DepartamentoCreate" class="control-label"></label>
+                <input asp-for="DepartamentoCreate" class="form-control" />
+                <span asp-validation-for="DepartamentoCreate" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DepartamentoUpdate" class="control-label"></label>
+                <input asp-for="DepartamentoUpdate" class="form-control" />
+                <span asp-validation-for="DepartamentoUpdate" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DepartamentoDelete" class="control-label"></label>
+                <input asp-for="DepartamentoDelete" class="form-control" />
+                <span asp-validation-for="DepartamentoDelete" class="text-danger"></span>
+             </div>-->
+
+            <input type="submit" value="Crear" class="btn btn-primary" />
+
+            <a asp-action="Index" class="btn btn-secondary">Volver</a> <!-- Botón de Volver -->
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
