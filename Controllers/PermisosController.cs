@@ -79,7 +79,7 @@ namespace RRHH.Controllers
                     ModelState.AddModelError("TipoPermisoId", "El tipo de permiso seleccionado no existe");
                 }
 
-
+                //---------------------------------------------------------------------------------
                 // Establecer valores por defecto
                 permiso.PermisoCreacion = DateTime.Now;
                 permiso.PermisoStatus = 2; // Pendiente por defecto
@@ -88,7 +88,6 @@ namespace RRHH.Controllers
                 _context.Add(permiso);
                 await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Permiso creado exitosamente.";
-
 
                 // Si hay error de validación, recargar los ViewBags
                 ViewBag.TipoPermisoId = new SelectList(_context.TipoPermisos, "TipoPermisoId", "TipoPermiso1", permiso.TipoPermisoId);
