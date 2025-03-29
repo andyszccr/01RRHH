@@ -23,7 +23,11 @@ namespace RRHH.Controllers
         // GET: Permisos
         public async Task<IActionResult> Index()
         {
-            var dbrrhhContext = _context.Permisos.Include(p => p.TipoPermiso).Include(p => p.Usuario).Include(p => p.UsuarioIdaprobadoPorNavigation);
+            var dbrrhhContext = _context.Permisos
+                .Include(p => p.TipoPermiso)
+                .Include(p => p.Usuario)
+                .Include(p => p.UsuarioIdaprobadoPorNavigation)
+                .OrderByDescending(p => p.PermisoCreacion);
             return View(await dbrrhhContext.ToListAsync());
         }
 
@@ -51,28 +55,54 @@ namespace RRHH.Controllers
         // GET: Permisos/Create
         public IActionResult Create()
         {
-            ViewData["TipoPermisoId"] = new SelectList(_context.TipoPermisos, "TipoPermisoId", "TipoPermisoId");
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario");
-            ViewData["UsuarioIdaprobadoPor"] = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario");
+            ViewBag.TipoPermisoId = new SelectList(_context.TipoPermisos, "TipoPermisoId", "TipoPermiso1");
+            ViewBag.UsuarioId = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario");
+            ViewBag.UsuarioIdaprobadoPor = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario");
             return View();
         }
 
         // POST: Permisos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PermisoId,UsuarioId,TipoPermisoId,PermisoStatus,HorasSolicitadas,PermisoCreacion,PermisoUpdate,PermisoDelete,UsuarioIdaprobadoPor,Motivo")] Permiso permiso)
+        public async Task<IActionResult> Create([Bind("UsuarioId,TipoPermisoId,HorasSolicitadas,Motivo")] Permiso permiso)
         {
-            if (ModelState.IsValid)
+            try
             {
+                // Validar que los IDs existan
+                if (!await _context.Usuarios.AnyAsync(u => u.UsuarioId == permiso.UsuarioId))
+                {
+                    ModelState.AddModelError("UsuarioId", "El usuario seleccionado no existe");
+                }
+
+                if (!await _context.TipoPermisos.AnyAsync(t => t.TipoPermisoId == permiso.TipoPermisoId))
+                {
+                    ModelState.AddModelError("TipoPermisoId", "El tipo de permiso seleccionado no existe");
+                }
+
+
+                // Establecer valores por defecto
+                permiso.PermisoCreacion = DateTime.Now;
+                permiso.PermisoStatus = 2; // Pendiente por defecto
+                permiso.UsuarioIdaprobadoPor = null; // Inicialmente no tiene aprobador
+                
                 _context.Add(permiso);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Permiso creado exitosamente.";
+
+
+                // Si hay error de validación, recargar los ViewBags
+                ViewBag.TipoPermisoId = new SelectList(_context.TipoPermisos, "TipoPermisoId", "TipoPermiso1", permiso.TipoPermisoId);
+                ViewBag.UsuarioId = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioId);
+
                 return RedirectToAction(nameof(Index));
             }
-            
-            ViewData["TipoPermisoId"] = new SelectList(_context.TipoPermisos, "TipoPermisoId", "TipoPermisoId", permiso.TipoPermisoId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioId);
-            ViewData["UsuarioIdaprobadoPor"] = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioIdaprobadoPor);
-            return View(permiso);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Error al crear el permiso: " + ex.Message);
+                ViewBag.TipoPermisoId = new SelectList(_context.TipoPermisos, "TipoPermisoId", "TipoPermiso1");
+                ViewBag.UsuarioId = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario");
+                return View(permiso);
+            }
         }
 
         // GET: Permisos/Edit/5
@@ -88,9 +118,9 @@ namespace RRHH.Controllers
             {
                 return NotFound();
             }
-            ViewData["TipoPermisoId"] = new SelectList(_context.TipoPermisos, "TipoPermisoId", "TipoPermisoId", permiso.TipoPermisoId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioId);
-            ViewData["UsuarioIdaprobadoPor"] = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioIdaprobadoPor);
+            ViewBag.TipoPermisoId = new SelectList(_context.TipoPermisos, "TipoPermisoId", "TipoPermiso1", permiso.TipoPermisoId);
+            ViewBag.UsuarioId = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioId);
+            ViewBag.UsuarioIdaprobadoPor = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioIdaprobadoPor);
             return View(permiso);
         }
 
@@ -108,8 +138,11 @@ namespace RRHH.Controllers
             {
                 try
                 {
+                    permiso.PermisoUpdate = DateTime.Now;
                     _context.Update(permiso);
                     await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Permiso actualizado exitosamente.";
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,11 +155,10 @@ namespace RRHH.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoPermisoId"] = new SelectList(_context.TipoPermisos, "TipoPermisoId", "TipoPermisoId", permiso.TipoPermisoId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioId);
-            ViewData["UsuarioIdaprobadoPor"] = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioIdaprobadoPor);
+            ViewBag.TipoPermisoId = new SelectList(_context.TipoPermisos, "TipoPermisoId", "TipoPermiso1", permiso.TipoPermisoId);
+            ViewBag.UsuarioId = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioId);
+            ViewBag.UsuarioIdaprobadoPor = new SelectList(_context.Usuarios, "UsuarioId", "NombreUsuario", permiso.UsuarioIdaprobadoPor);
             return View(permiso);
         }
 
@@ -159,10 +191,12 @@ namespace RRHH.Controllers
             var permiso = await _context.Permisos.FindAsync(id);
             if (permiso != null)
             {
-                _context.Permisos.Remove(permiso);
+                permiso.PermisoDelete = DateTime.Now;
+                permiso.PermisoStatus = 3; // Rechazado
+                _context.Update(permiso);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Permiso eliminado exitosamente.";
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

@@ -1,68 +1,69 @@
 ﻿@model RRHH.Models.Permiso
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Nuevo Permiso";
 }
 
-<h1>Create</h1>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Nuevo Permiso</h4>
+                </div>
+                <div class="card-body">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
 
-<h4>Permiso</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UsuarioId" class="control-label"></label>
-                <select asp-for="UsuarioId" class ="form-control" asp-items="ViewBag.UsuarioId"></select>
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="UsuarioId" class="form-label">Solicitante</label>
+                            <select asp-for="UsuarioId" class="form-select" asp-items="ViewBag.UsuarioId">
+                                <option value="">-- Seleccione un solicitante --</option>
+                            </select>
+                            <span asp-validation-for="UsuarioId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="TipoPermisoId" class="form-label">Tipo de Permiso</label>
+                            <select asp-for="TipoPermisoId" class="form-select" asp-items="ViewBag.TipoPermisoId">
+                                <option value="">-- Seleccione un tipo de permiso --</option>
+                            </select>
+                            <span asp-validation-for="TipoPermisoId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="HorasSolicitadas" class="form-label">Horas Solicitadas</label>
+                            <input asp-for="HorasSolicitadas" class="form-control" type="number" min="1" step="0.5" />
+                            <span asp-validation-for="HorasSolicitadas" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Motivo" class="form-label">Motivo</label>
+                            <textarea asp-for="Motivo" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Motivo" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Volver
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="TipoPermisoId" class="control-label"></label>
-                <select asp-for="TipoPermisoId" class ="form-control" asp-items="ViewBag.TipoPermisoId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="PermisoStatus" class="control-label"></label>
-                <input asp-for="PermisoStatus" class="form-control" />
-                <span asp-validation-for="PermisoStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HorasSolicitadas" class="control-label"></label>
-                <input asp-for="HorasSolicitadas" class="form-control" />
-                <span asp-validation-for="HorasSolicitadas" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PermisoCreacion" class="control-label"></label>
-                <input asp-for="PermisoCreacion" class="form-control" />
-                <span asp-validation-for="PermisoCreacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PermisoUpdate" class="control-label"></label>
-                <input asp-for="PermisoUpdate" class="form-control" />
-                <span asp-validation-for="PermisoUpdate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PermisoDelete" class="control-label"></label>
-                <input asp-for="PermisoDelete" class="form-control" />
-                <span asp-validation-for="PermisoDelete" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UsuarioIdaprobadoPor" class="control-label"></label>
-                <select asp-for="UsuarioIdaprobadoPor" class ="form-control" asp-items="ViewBag.UsuarioIdaprobadoPor"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Motivo" class="control-label"></label>
-                <input asp-for="Motivo" class="form-control" />
-                <span asp-validation-for="Motivo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
