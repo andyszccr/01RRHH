@@ -1,43 +1,110 @@
 ﻿@model IEnumerable<RRHH.Models.Departamento>
 
 @{
-    ViewData["Title"] = "Lista de Departamentos";
+    ViewData["Title"] = "Departamentos";
 }
 
-<h1>Departamentos</h1>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Departamentos</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nuevo Departamento
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Agregar Departamento</a>
-</p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Nombre del Departamento</th>
-            <th>Fecha de Creación</th>
-            <th>Fecha de Actualización</th>
-            <th>Fecha de Eliminación</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.Departamento1</td>
-                <td>@item.DepartamentoCreate?.ToString("dd/MM/yyyy")</td>
-                <td>@item.DepartamentoUpdate?.ToString("dd/MM/yyyy")</td>
-                <td>@item.DepartamentoDelete?.ToString("dd/MM/yyyy")</td>
-                <td style="background-color: @(item.DepartamentoStatus ? "lightblue" : "lightgray"); color: black;">
-                    @(item.DepartamentoStatus ? "Activo" : "Inactivo")
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.DepartamentoId" class="btn btn-warning">Editar</a>
-                    <a asp-action="Details" asp-route-id="@item.DepartamentoId" class="btn btn-info">Detalles</a>
-                    <a asp-action="Delete" asp-route-id="@item.DepartamentoId" class="btn btn-danger">Eliminar</a>
-                </td>
-            </tr>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header bg-light">
+                        <h5 class="card-title mb-0">@item.Departamento1</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <small class="text-muted">Fecha Creación:</small>
+                            <p class="mb-0">@item.DepartamentoCreate?.ToString("dd/MM/yyyy")</p>
+                        </div>
+                        <div class="mb-3">
+                            <small class="text-muted">Fecha Actualización:</small>
+                            <p class="mb-0">@item.DepartamentoUpdate?.ToString("dd/MM/yyyy")</p>
+                        </div>
+                        <div class="mb-3">
+                            <small class="text-muted">Fecha Eliminación:</small>
+                            <p class="mb-0">@item.DepartamentoDelete?.ToString("dd/MM/yyyy")</p>
+                        </div>
+                        <div class="mb-3">
+                            <small class="text-muted">Estado:</small>
+                            <div>
+                                @if (item.DepartamentoStatus)
+                                {
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check"></i> Activo
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        <i class="fas fa-times"></i> Inactivo
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-action="Edit" asp-route-id="@item.DepartamentoId" class="btn btn-outline-warning btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.DepartamentoId" class="btn btn-outline-info btn-sm">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.DepartamentoId" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.2s;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .card-header {
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .card-footer {
+        border-top: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .btn-sm {
+        padding: 0.5rem 0.75rem;
+        min-width: 40px;
+        text-align: center;
+    }
+    
+    .badge {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .badge i {
+        margin-right: 5px;
+    }
+    
+    .text-muted {
+        font-size: 0.85rem;
+    }
+</style>

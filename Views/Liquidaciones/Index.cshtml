@@ -1,59 +1,101 @@
-﻿@model IEnumerable<RRHH.Models.Liquidacione>
+﻿@model IEnumerable<RRHH.Models.Departamento>
 
 @{
-    ViewData["Title"] = "Lista Liquidaciones";
+    ViewData["Title"] = "Departamentos";
 }
 
-<h1>Liquidaciones</h1>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Departamentos</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nuevo Departamento
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Agregar Nuevo</a>
-</p>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Fecha Creación</th>
+                            <th>Fecha Actualización</th>
+                            <th>Fecha Eliminación</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Departamento1</td>
+                                <td>@item.DepartamentoCreate?.ToString("dd/MM/yyyy")</td>
+                                <td>@item.DepartamentoUpdate?.ToString("dd/MM/yyyy")</td>
+                                <td>@item.DepartamentoDelete?.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @if (item.DepartamentoStatus)
+                                    {
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-check-circle"></i> Activo
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            <i class="fas fa-times-circle"></i> Inactivo
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a asp-action="Edit" asp-route-id="@item.DepartamentoId" class="btn btn-outline-warning btn-sm me-2">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.DepartamentoId" class="btn btn-outline-info btn-sm me-2">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.DepartamentoId" class="btn btn-outline-danger btn-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
+<style>
+    .btn-group .btn {
+        padding: 0.5rem 0.75rem;
+        min-width: 40px;
+        text-align: center;
+    }
 
-    <table class="table">
-    <thead>
-        <tr>
-            <th>Usuario</th>
-            <th>Tipo Liquidación</th>
-            <th>Fecha Liquidación</th>
-            <th>Salario Base</th>
-            <th>Vacaciones No Disfrutadas</th>
-            <th>Aguinaldo Proporcional</th>
-            <th>Preaviso</th>
-            <th>Indemnización</th>
-            <th>Total Liquidación</th>
-            <th>Estado</th>
-            <th>Fecha de Pago</th>
-            <th>Banco</th>
-            <th>Número de Cuenta</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var liquidacione in Model)
-        {
-            <tr>
-                <td>@liquidacione.Usuario?.NombreUsuario</td>
-                <td>@liquidacione.TipoLiquidacion?.NombreTipo</td>
-                <td>@liquidacione.FechaLiquidacion</td>
-                <td>@liquidacione.SalarioBase</td>
-                <td>@liquidacione.VacacionesNoDisfrutadas</td>
-                <td>@liquidacione.AguinaldoProporcional</td>
-                <td>@liquidacione.Preaviso</td>
-                <td>@liquidacione.Indemnizacion</td>
-                <td>@liquidacione.TotalLiquidacion</td>
-                <td>@liquidacione.Estado</td>
-                <td>@liquidacione.FechaPago</td>
-                <td>@liquidacione.Banco</td>
-                <td>@liquidacione.NumeroCuenta</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@liquidacione.LiquidacionId" class="btn btn-warning">Editar</a>
-                    <a asp-action="Details" asp-route-id="@liquidacione.LiquidacionId" class="btn btn-info">Detalles</a>
-                    <a asp-action="Delete" asp-route-id="@liquidacione.LiquidacionId" class="btn btn-danger">Eliminar</a>
-                </td>
-            </tr>
+        .btn-group .btn i {
+            font-size: 1rem;
         }
-    </tbody>
-</table>
 
+    .badge {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+        .badge i {
+            margin-right: 5px;
+        }
+
+    .table th {
+        font-weight: 600;
+        background-color: #f8f9fa;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+</style>
